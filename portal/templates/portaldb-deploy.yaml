@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.prefix }}db
+  namespace: {{ .Values.prefix }}
+  labels:
+    app: {{ .Values.prefix }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.prefix }}
+      tier: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.prefix }}
+        tier: mysql
+    spec:
+      containers:
+      - image: mysql:8.0.28-oracle
+        name: {{ .Values.prefix }}db
+        env:
+        - name: MYSQL_DATABASE
+          value: {{ .Values.prefix }}
+        - name: MYSQL_ROOT_PASSWORD
+          value: adminadmin123! #TEMP
+#          valueFrom:
+#            secretKeyRef:
+#              name: {{ .Values.prefix }}-secret
+#              key: password
+        ports:
+        - containerPort: 3306
+          name: db-port
+        volumeMounts:
+        - name: {{ .Values.prefix }}db-volume
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: {{ .Values.prefix }}db-volume
+        persistentVolumeClaim:
+          claimName: {{ .Values.prefix }}db-pvc

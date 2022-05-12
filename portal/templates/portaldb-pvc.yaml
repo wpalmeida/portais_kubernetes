@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.prefix }}db-pvc
+  namespace: {{ .Values.prefix }}
+  labels:
+    app: {{ .Values.prefix }}
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ""
+  resources:
+    requests:
+      storage: 5Gi
+  volumeName: {{ .Values.prefix }}db-pv

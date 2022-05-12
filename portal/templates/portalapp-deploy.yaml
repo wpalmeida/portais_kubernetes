@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.prefix }}app
+  namespace: {{ .Values.prefix }}
+  labels:
+    app: {{ .Values.prefix }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.prefix }}
+      tier: frontend
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.prefix }}
+        tier: frontend
+    spec:
+      containers:
+      - image: wordpress
+#      - image: wordpress:4.8-apache
+        name: {{ .Values.prefix }}app
+        env:
+        - name: WORDPRESS_DB_HOST
+          value: {{ .Values.prefix }}db
+        - name: WORDPRESS_DB_NAME
+          value: {{ .Values.prefix }}
+        - name: WORDPRESS_DB_PASSWORD
+          value: adminadmin123! #TEMP
+#          valueFrom:
+#            secretKeyRef:
+#              name: {{ .Values.prefix }}-secret
+#              key: password
+        ports:
+        - containerPort: 80
+          name: app-port
+        volumeMounts:
+        - name: {{ .Values.prefix }}app-volume
+          mountPath: /var/www/html
+      volumes:
+      - name: {{ .Values.prefix }}app-volume
+        persistentVolumeClaim:
+          claimName: {{ .Values.prefix }}app-pvc
