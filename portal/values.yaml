@@ -1,6 +1,6 @@
 prefix: portal
-app:
-  volumeHandle: ocid1.filesystem.oc1.sa_saopaulo_1.aaaaaaaaaaadtschm5zhkllqojxwiottmewxgylpobqxk3dpfuys2ylefuyqaaaa:10.0.10.248
-db:
-  volumeHandle: ocid1.filesystem.oc1.sa_saopaulo_1.aaaaaaaaaaadtscim5zhkllqojxwiottmewxgylpobqxk3dpfuys2ylefuyqaaaa:10.0.10.248
 domain: mydomain
+app:
+  volumeHandle: ocid1.filesystem.oc1.sa_saopaulo_1.aaaaaaaaaaadtnjqm5zhkllqojxwiottmewxgylpobqxk3dpfuys2ylefuyqaaaa:10.0.10.43
+db:
+  volumeHandle: ocid1.filesystem.oc1.sa_saopaulo_1.aaaaaaaaaaadtnjpm5zhkllqojxwiottmewxgylpobqxk3dpfuys2ylefuyqaaaa:10.0.10.43
