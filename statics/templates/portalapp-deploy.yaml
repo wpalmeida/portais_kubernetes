@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.prefix }}app
+  namespace: {{ .Values.prefix }}
+  labels:
+    app: {{ .Values.prefix }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.prefix }}
+      tier: frontend
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.prefix }}
+        tier: frontend
+    spec:
+      containers:
+      - image: nginx
+        name: {{ .Values.prefix }}app
+        ports:
+        - containerPort: 80
+          name: app-port
+        volumeMounts:
+        - name: {{ .Values.prefix }}app-volume
+          mountPath: /usr/share/nginx/html
+      volumes:
+      - name: {{ .Values.prefix }}app-volume
+        persistentVolumeClaim:
+          claimName: {{ .Values.prefix }}app-pvc
